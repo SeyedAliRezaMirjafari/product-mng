@@ -11,6 +11,10 @@
 <p>اطلاعات مربوط به اتصال به دیتابیس در فایل 
 <a href="https://github.com/SeyedAliRezaMirjafari/product-mng/blob/master/src/main/resources/application.properties">application.properties</a>
 موجود است، با توجه به ساده نگاه کردن به کار از پروفایل بندی تنظیمات صرف نظر شده است.</p>
+<p>برخی از تنظیمات مورد نیاز پروژه در فایل
+<a href="https://github.com/SeyedAliRezaMirjafari/product-mng/blob/master/src/main/resources/config.properties">config.properties</a>
+میباشد.
+</p>
 </div>
 
 <div dir="rtl">
