@@ -2,6 +2,7 @@ package com.sed.productmanagement.model.product.dao;
 
 
 import com.sed.productmanagement.model.product.Product;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -16,7 +17,7 @@ import java.util.Optional;
 public interface ProductDao extends JpaRepository<Product, Long> {
 
     @Query("SELECT p FROM Product AS p where p.visible = true and p.active = true ")
-    List<Product> findAllByActiveIsTrueAndVisibleIsTrue(Pageable pageable);
+    Page<Product> findAllByActiveIsTrueAndVisibleIsTrue(Pageable pageable);
 
 
     @EntityGraph(

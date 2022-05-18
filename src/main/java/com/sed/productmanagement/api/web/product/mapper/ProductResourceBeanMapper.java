@@ -38,9 +38,12 @@ public interface ProductResourceBeanMapper {
     @IterableMapping(qualifiedByName = "liteProductDto")
     List<ProductDTO> toProductDtos(List<Product> products);
 
-    default ProductListResponse toProductListResponse(List<Product> products) {
+    default ProductListResponse toProductListResponse(Page<Product> products) {
         ProductListResponse productListResponse = new ProductListResponse();
-        productListResponse.setProducts(toProductDtos(products));
+        productListResponse.setProducts(toProductDtos(products.getContent()));
+        productListResponse.setCount(products.getTotalElements());
+        productListResponse.setPageCount(products.getTotalPages());
+        productListResponse.setPage(products.getNumber());
         productListResponse.setResult(Result.SUCCESS);
         return productListResponse;
     }

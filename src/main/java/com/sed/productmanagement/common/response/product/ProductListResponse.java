@@ -12,4 +12,7 @@ import java.util.List;
 @Getter
 public class ProductListResponse extends ResponseServiceBase {
     private List<ProductDTO> products;
+    private Long count;
+    private Integer pageCount;
+    private Integer page;
 }

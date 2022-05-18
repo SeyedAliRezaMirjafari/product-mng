@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 
 import java.time.Instant;
 import java.util.List;
@@ -63,10 +64,10 @@ public class ProductJournalServiceIT extends AbstractIT {
     @Test
     void getActiveVisibleProducts() {
         initDb();
-        List<Product> products = productJournalService.getActiveVisibleProducts(0);
-        Assertions.assertEquals(products.size(), 2);
-        Assertions.assertEquals(products.get(0).getCode(), "code_1");
-        Assertions.assertEquals(products.get(1).getCode(), "code_2");
+        Page<Product> products = productJournalService.getActiveVisibleProducts(0);
+        Assertions.assertEquals(products.getContent().size(), 2);
+        Assertions.assertEquals(products.getContent().get(0).getCode(), "code_1");
+        Assertions.assertEquals(products.getContent().get(1).getCode(), "code_2");
         //FIXME: add full assertions
 
     }

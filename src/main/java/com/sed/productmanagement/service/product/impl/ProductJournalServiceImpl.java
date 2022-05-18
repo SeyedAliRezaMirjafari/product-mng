@@ -8,6 +8,7 @@ import com.sed.productmanagement.model.product.dao.ProductDao;
 import com.sed.productmanagement.service.product.ProductJournalService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
@@ -23,7 +24,7 @@ public class ProductJournalServiceImpl implements ProductJournalService {
     private final Config config;
 
     @Override
-    public List<Product> getActiveVisibleProducts(int page) {
+    public Page<Product> getActiveVisibleProducts(int page) {
         logger.info("gonna get active and visible products. page: {}", page);
         return productDao.findAllByActiveIsTrueAndVisibleIsTrue(PageRequest.of(page, config.getProductBatchSize()));
     }
