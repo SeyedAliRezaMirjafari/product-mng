@@ -1,11 +1,14 @@
 package com.sed.productmanagement.service.comment.impl;
 
+import com.sed.productmanagement.common.response.base.Result;
 import com.sed.productmanagement.config.Config;
 import com.sed.productmanagement.exception.GeneralException;
 import com.sed.productmanagement.model.comment.Comment;
 import com.sed.productmanagement.model.comment.dao.CommentDao;
 import com.sed.productmanagement.model.product.Product;
+import com.sed.productmanagement.model.product.ProductView;
 import com.sed.productmanagement.service.comment.CommentService;
+import com.sed.productmanagement.service.comment.model.CommentModel;
 import com.sed.productmanagement.service.product.ProductJournalService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -41,13 +44,37 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public Page<Comment> findLiteByProduct(Product product) {
+    public Page<Comment> findLiteByProduct(ProductView product) {
         logger.info("gonna find comments by product. productCode: {}", product.getCode());
         return commentDao.findPaginationByProduct(product.getCode(), PageRequest.of(0, config.getCommentShortListSize(), Sort.by("modificationStatusTime").descending()));
+    }
+
+    @Override
+    public void addComment(CommentModel commentModel) throws GeneralException {
+        logger.info("gonna add comment. model: {}", commentModel);
+        Product product = productJournalService.findByActiveIsTrueAndVisibleIsTrueAndCodeIs(commentModel.getProductCode());
+        canCommented(product, commentModel);
+        initComment(product, commentModel);
     }
 
     private boolean visibleComment(Product product) {
         //FIXME: external service
         return product.isPublicVisibleComment() /*|| buyeProduct*/;
+    }
+
+    private void canCommented(Product product, CommentModel commentModel) throws GeneralException {
+        //FIXME: external service
+        if (!Product.ActionType.PUBLIC.equals(product.getCommentable()) /*|| !(Product.ActionType.ONLY_BUYER && buyer(commentModel))*/) {
+            throw new GeneralException(Result.ACCESS_ERROR, "can't commented");
+        }
+    }
+
+    private void initComment(Product product, CommentModel commentModel) {
+        Comment comment = Comment.builder()
+                .message(commentModel.getMessage())
+                .product(product)
+                .userId(commentModel.getUserId())
+                .build();
+        commentDao.save(comment);
     }
 }

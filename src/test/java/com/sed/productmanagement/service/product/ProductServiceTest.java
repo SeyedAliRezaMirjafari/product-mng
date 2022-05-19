@@ -5,8 +5,11 @@ import com.sed.productmanagement.fake.CommentFake;
 import com.sed.productmanagement.fake.ProductFake;
 import com.sed.productmanagement.model.comment.Comment;
 import com.sed.productmanagement.model.product.Product;
+import com.sed.productmanagement.model.product.ProductView;
 import com.sed.productmanagement.service.comment.CommentService;
 import com.sed.productmanagement.service.product.impl.ProductServiceImpl;
+import com.sed.productmanagement.service.product.mapper.ProductServiceBeanMapper;
+import com.sed.productmanagement.service.product.mapper.ProductServiceBeanMapperImpl;
 import com.sed.productmanagement.service.product.model.ProductModel;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -24,11 +27,14 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doReturn;
 
 @ExtendWith({SpringExtension.class})
-@Import({ProductServiceImpl.class})
+@Import({ProductServiceImpl.class, ProductServiceBeanMapperImpl.class,})
 public class ProductServiceTest {
 
     @Autowired
     private ProductService productService;
+
+    @Autowired
+    private ProductServiceBeanMapper mapper;
 
     @MockBean
     private CommentService commentService;
@@ -39,7 +45,7 @@ public class ProductServiceTest {
 
     @Test
     void getProduct_successful() throws GeneralException {
-        doReturn(createProduct()).when(productJournalService).findByActiveIsTrueAndVisibleIsTrueAndCodeIs("code");
+        doReturn(createProduct()).when(productJournalService).findWithProvidersByActiveIsTrueAndVisibleIsTrueAndCodeIs("code");
         doReturn(createComments()).when(commentService).findLiteByProduct(any());
         ProductModel productModel = productService.getProduct("code");
         Assertions.assertNotNull(productModel);
@@ -49,9 +55,9 @@ public class ProductServiceTest {
 
     @Test
     void getProduct_commentVisibleFalse_successful() throws GeneralException {
-        Product product = createProduct();
+        ProductView product = createProduct();
         product.setPublicVisibleComment(false);
-        doReturn(product).when(productJournalService).findByActiveIsTrueAndVisibleIsTrueAndCodeIs("code");
+        doReturn(product).when(productJournalService).findWithProvidersByActiveIsTrueAndVisibleIsTrueAndCodeIs("code");
         doReturn(createComments()).when(commentService).findLiteByProduct(any());
         ProductModel productModel = productService.getProduct("code");
         Assertions.assertNotNull(productModel);
@@ -59,8 +65,8 @@ public class ProductServiceTest {
         Assertions.assertNull(productModel.getComments());
     }
 
-    private Product createProduct() {
-        Product product = ProductFake.createProduct();
+    private ProductView createProduct() {
+        ProductView product = ProductFake.createProductView();
         product.setId(1L);
         return product;
     }

@@ -55,7 +55,7 @@ CREATE TABLE `product`  (
   `public_visible_comment` bit(1) NOT NULL,
   `title` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `visible` bit(1) NOT NULL,
-  `voteable` int NULL DEFAULT NULL,
+  `votable` int NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `UK_h3w5r1mx6d0e5c6um32dgyjej`(`code` ASC) USING BTREE,
   INDEX `product_code_visible_active`(`active` ASC, `code` ASC, `visible` ASC) USING BTREE

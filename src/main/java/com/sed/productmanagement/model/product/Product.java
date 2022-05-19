@@ -35,7 +35,7 @@ public class Product {
 
     private boolean visible = true;
 
-    private ActionType voteable = ActionType.PUBLIC;
+    private ActionType votable = ActionType.PUBLIC;
 
     private ActionType commentable = ActionType.PUBLIC;
 
@@ -47,12 +47,6 @@ public class Product {
             joinColumns = @JoinColumn(name = "product_id"),
             inverseJoinColumns = @JoinColumn(name = "provider_id"))
     private Set<Provider> providers;
-
-    @Formula("(SELECT COUNT(v.id) FROM Vote v WHERE v.status = 1 and id = v.product_id)")
-    private Long voteCount;
-
-    @Formula("(SELECT avg(v.score) FROM Vote v WHERE v.status = 1 and id = v.product_id)")
-    private Double voteAverage;
 
     @Setter(AccessLevel.NONE)
     private Instant creationTime;

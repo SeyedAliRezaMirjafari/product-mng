@@ -23,7 +23,7 @@ public class ProductDTO {
 
     private String url;
 
-    private ActionTypeDTO voteable;
+    private ActionTypeDTO votable;
 
     private ActionTypeDTO commentable;
 

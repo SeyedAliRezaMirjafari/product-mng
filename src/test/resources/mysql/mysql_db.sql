@@ -16,7 +16,7 @@ CREATE TABLE `product`
     `public_visible_comment` bit(1)       NOT NULL,
     `title`                  varchar(255) DEFAULT NULL,
     `visible`                bit(1)       NOT NULL,
-    `voteable`               int          DEFAULT NULL,
+    `votable`               int          DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `UK_h3w5r1mx6d0e5c6um32dgyjej` (`code`),
     KEY                      `product_code_visible_active` (`active`,`code`,`visible`) USING BTREE

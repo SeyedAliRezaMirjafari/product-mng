@@ -2,6 +2,7 @@ package com.sed.productmanagement.model.vote;
 
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.sed.productmanagement.model.product.Product;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -35,6 +36,17 @@ public class Vote {
     @Indexed
     private Product product;
 
+    public Vote() {
+    }
+
+    @Builder
+    public Vote(int score, String userId, Product product) {
+        this.score = score;
+        this.userId = userId;
+        this.product = product;
+        this.status = Status.INITIATED;
+        this.creationTime = Instant.now();
+    }
 
     public enum Status {
         INITIATED(0), ACCEPTED(1), REJECTED(2);

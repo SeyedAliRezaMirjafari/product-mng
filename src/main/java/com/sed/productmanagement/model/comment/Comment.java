@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.sed.productmanagement.model.product.Product;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.annotations.BatchSize;
@@ -64,6 +65,17 @@ public class Comment {
         }
     }
 
+    public Comment() {
+    }
+
+    @Builder
+    public Comment(String message, Product product, String userId) {
+        this.message = message;
+        this.product = product;
+        this.userId = userId;
+        this.status = Status.INITIATED;
+        this.creationTime = Instant.now();
+    }
 }
 
 
