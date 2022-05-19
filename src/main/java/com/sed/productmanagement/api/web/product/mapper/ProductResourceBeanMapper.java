@@ -10,6 +10,7 @@ import com.sed.productmanagement.common.response.product.ProductResponse;
 import com.sed.productmanagement.component.mapper.Utils;
 import com.sed.productmanagement.model.comment.Comment;
 import com.sed.productmanagement.model.product.Product;
+import com.sed.productmanagement.model.product.ProductView;
 import com.sed.productmanagement.service.product.model.ProductModel;
 import org.mapstruct.*;
 import org.springframework.data.domain.Page;
@@ -23,7 +24,7 @@ public interface ProductResourceBeanMapper {
     @Named("liteProductDto")
     @Mapping(target = "code", source = "code")
     @Mapping(target = "commentable", ignore = true)
-    @Mapping(target = "voteable", ignore = true)
+    @Mapping(target = "votable", ignore = true)
     @Mapping(target = "providers", ignore = true)
     @Mapping(target = "description", source = "description")
     @Mapping(target = "image", source = "image", qualifiedByName = "toFileUrl")
@@ -33,24 +34,24 @@ public interface ProductResourceBeanMapper {
     @Mapping(target = "voteSummary.count", source = "voteCount")
     @Mapping(target = "voteSummary.average", source = "voteAverage")
     @Mapping(target = "commentSummary", ignore = true)
-    ProductDTO toProductDto(Product product);
+    ProductDTO toProductDto(ProductView productView);
 
     @IterableMapping(qualifiedByName = "liteProductDto")
-    List<ProductDTO> toProductDtos(List<Product> products);
+    List<ProductDTO> toProductDtos(List<ProductView> productViews);
 
-    default ProductListResponse toProductListResponse(Page<Product> products) {
+    default ProductListResponse toProductListResponse(Page<ProductView> productViews) {
         ProductListResponse productListResponse = new ProductListResponse();
-        productListResponse.setProducts(toProductDtos(products.getContent()));
-        productListResponse.setCount(products.getTotalElements());
-        productListResponse.setPageCount(products.getTotalPages());
-        productListResponse.setPage(products.getNumber());
+        productListResponse.setProducts(toProductDtos(productViews.getContent()));
+        productListResponse.setCount(productViews.getTotalElements());
+        productListResponse.setPageCount(productViews.getTotalPages());
+        productListResponse.setPage(productViews.getNumber());
         productListResponse.setResult(Result.SUCCESS);
         return productListResponse;
     }
 
     @Mapping(target = "code", source = "code")
     @Mapping(target = "commentable", source = "commentable")
-    @Mapping(target = "voteable", source = "voteable")
+    @Mapping(target = "votable", source = "votable")
     @Mapping(target = "providers", source = "providers")
     @Mapping(target = "description", source = "description")
     @Mapping(target = "image", source = "image", qualifiedByName = "toFileUrl")
@@ -60,7 +61,7 @@ public interface ProductResourceBeanMapper {
     @Mapping(target = "voteSummary.count", source = "voteCount")
     @Mapping(target = "voteSummary.average", source = "voteAverage")
     @Mapping(target = "commentSummary", ignore = true)
-    ProductDTO toFullProductDto(Product product);
+    ProductDTO toFullProductDto(ProductView productView);
 
     default ProductResponse toProductResponse(ProductModel productModel) {
         ProductResponse productResponse = new ProductResponse();

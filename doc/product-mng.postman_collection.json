@@ -6,7 +6,7 @@
 	},
 	"item": [
 		{
-			"name": "localhost:8081/product",
+			"name": "get all product",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -30,7 +30,7 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8081/product/6125237",
+			"name": "get product detail",
 			"request": {
 				"method": "GET",
 				"header": [],
@@ -49,19 +49,19 @@
 			"response": []
 		},
 		{
-			"name": "localhost:8081/product/6125237/comment",
+			"name": "get product comments",
 			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "localhost:8081/product/6125237/comment?page=0",
+					"raw": "localhost:8081/product/code/comment?page=0",
 					"host": [
 						"localhost"
 					],
 					"port": "8081",
 					"path": [
 						"product",
-						"6125237",
+						"code",
 						"comment"
 					],
 					"query": [
@@ -69,6 +69,102 @@
 							"key": "page",
 							"value": "0"
 						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add vote",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "USER-ID",
+						"value": "user-id-1",
+						"type": "default"
+					}
+				],
+				"url": {
+					"raw": "localhost:8081/product/code/vote?score=2",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"product",
+						"code",
+						"vote"
+					],
+					"query": [
+						{
+							"key": "score",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "add comment",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "USER-Id",
+						"value": "user_id_1",
+						"type": "default"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"message\":\"سلام خیلی ممنون از محصولات خوبتون\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/product/code/comment",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"product",
+						"code",
+						"comment"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "change product user action",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"active\":1,\r\n    \"visible\":1,\r\n    \"votable\":2,\r\n    \"commentable\":2,\r\n    \"publicVisibleComment\":0\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8081/admin/product/code",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"admin",
+						"product",
+						"code"
 					]
 				}
 			},

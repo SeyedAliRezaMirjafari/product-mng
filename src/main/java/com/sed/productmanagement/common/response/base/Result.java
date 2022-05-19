@@ -8,7 +8,8 @@ public enum Result {
     UNKNOWN(1, "unknown"),
     FAILURE(2, "failure"),
     NOT_FOUND(3, "not.found"),
-    ACCESS_ERROR(4, "access.error");
+    ACCESS_ERROR(4, "access.error"),
+    INVALID_PARAMETER(5,"invalid.parameter");
 
     private final String description;
     private final Integer status;

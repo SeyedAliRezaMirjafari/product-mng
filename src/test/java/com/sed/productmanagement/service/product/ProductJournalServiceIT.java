@@ -5,6 +5,7 @@ import com.sed.productmanagement.common.response.base.Result;
 import com.sed.productmanagement.exception.GeneralException;
 import com.sed.productmanagement.fake.ProductFake;
 import com.sed.productmanagement.model.product.Product;
+import com.sed.productmanagement.model.product.ProductView;
 import com.sed.productmanagement.model.product.dao.ProductDao;
 import com.sed.productmanagement.model.productproviders.dao.ProductProvidersDao;
 import com.sed.productmanagement.model.provider.dao.ProviderDao;
@@ -64,7 +65,7 @@ public class ProductJournalServiceIT extends AbstractIT {
     @Test
     void getActiveVisibleProducts() {
         initDb();
-        Page<Product> products = productJournalService.getActiveVisibleProducts(0);
+        Page<ProductView> products = productJournalService.getActiveVisibleProducts(0);
         Assertions.assertEquals(products.getContent().size(), 2);
         Assertions.assertEquals(products.getContent().get(0).getCode(), "code_1");
         Assertions.assertEquals(products.getContent().get(1).getCode(), "code_2");
